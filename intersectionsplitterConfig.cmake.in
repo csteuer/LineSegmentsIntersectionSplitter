@@ -1,0 +1,25 @@
+# - Config file for the intersectionsplitter package
+# It defines the following variables
+#  intersectionsplitter_INCLUDE_DIRS - include directories for intersectionsplitter 
+#  intersectionsplitter_LIBRARIES    - libraries to link against
+ 
+# Compute paths
+get_filename_component(intersectionsplitter_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(intersectionsplitter_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+ 
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET intersectionsplitter AND NOT intersectionsplitter_BINARY_DIR)
+  include("${intersectionsplitter_CMAKE_DIR}/intersectionsplitterTargets.cmake")
+endif()
+
+foreach(component ${intersectionsplitter_FIND_COMPONENTS})
+    set(intersectionsplitter_${component}_FOUND 0)
+endforeach()
+
+foreach(component @EXPORT_TARGETS@)
+    list(FIND intersectionsplitter_FIND_COMPONENTS ${component} NEEDS_COMPONENT)
+    if (${NEEDS_COMPONENT} GREATER -1)
+        set(intersectionsplitter_LIBRARIES ${intersectionsplitter_LIBRARIES} ${component})
+        set(intersectionsplitter_${component}_FOUND 1)
+    endif()
+endforeach()
