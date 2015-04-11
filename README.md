@@ -5,7 +5,7 @@ Implements a modified version of the Bentley–Ottmann algorithm described in [d
 
 ## Dependencies
 
-Requires gcc 4.7+ or clang 3.1+, gmock 1.7+ for building the tests (optional) and doxygen for generating the documentatíon (also optional).
+Requires gcc 4.7+ or clang 3.1+, cmake 2.8.12+, gmock 1.7+ for building the tests (optional) and doxygen for generating the documentatíon (also optional).
 
 ## How to build
 
