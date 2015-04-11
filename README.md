@@ -28,6 +28,7 @@ For building the tests checkout [gmock (>= 1.7)](https://code.google.com/p/googl
 
 ~~~~~~~~~~~~~{.txt}
 svn checkout http://googlemock.googlecode.com/svn/tags/release-1.7.0 gmock
+cd build
 cmake .. -DBUILD_TESTS=ON
 ./intersectionsplitter/tests/intersectionsplitter-tests
 ~~~~~~~~~~~~~
