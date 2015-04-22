@@ -64,6 +64,16 @@ IF(BUILD_TESTS)
 	include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 ENDIF()
 
+##########################################################################################################
+# Benchmarks (with hayai)
+##########################################################################################################
+
+option(BUILD_BENCHMARKS "Builds the intersectionsplitter benchmark tests" OFF)
+
+IF(BUILD_BENCHMARKS)
+    find_package(hayai REQUIRED)
+    add_subdirectory(benchmarks)
+ENDIF()
 
 ##########################################################################################################
 # Install definitions
@@ -107,6 +117,11 @@ endfunction()
 ##########################################################################################################
 
 add_subdirectory(intersectionsplitter)
+
+option(BUILD_APPS "Build the demo applications" OFF)
+if (BUILD_APPS)
+    add_subdirectory(apps)
+endif()
 
 ##########################################################################################################
 # Install

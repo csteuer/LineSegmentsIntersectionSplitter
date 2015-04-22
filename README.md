@@ -5,7 +5,8 @@ Implements a modified version of the Bentley–Ottmann algorithm described in [d
 
 ## Dependencies
 
-Requires gcc 4.7+ or clang 3.1+, cmake 2.8.12+, gmock 1.7+ for building the tests (optional) and doxygen for generating the documentatíon (also optional).
+Requires gcc 4.7+ or clang 3.1+, cmake 2.8.12+, [gmock 1.7+](https://code.google.com/p/googlemock/) for building the tests (optional),
+[hayai](https://github.com/nickbruun/hayai) for building the benchmarks (optional) and doxygen for generating the documentatíon (also optional).
 
 ## How to build
 
@@ -24,7 +25,7 @@ Run `make doc` to generate the documentation (doxygen must be installed and and 
 
 ### Build and run the tests
 
-For building the tests checkout [gmock (>= 1.7)](https://code.google.com/p/googlemock/source/checkout) into `<project-root>/gmock` and set the cmake variable `BUILD_TESTS=ON`:
+Checkout [gmock (>= 1.7)](https://code.google.com/p/googlemock/source/checkout) into `<project-root>/gmock` and set the cmake variable `BUILD_TESTS=ON`:
 
 ~~~~~~~~~~~~~{.txt}
 svn checkout http://googlemock.googlecode.com/svn/tags/release-1.7.0 gmock
@@ -32,6 +33,10 @@ cd build
 cmake .. -DBUILD_TESTS=ON
 ./intersectionsplitter/tests/intersectionsplitter-tests
 ~~~~~~~~~~~~~
+
+### Build and run the benchmarks
+
+Install [hayai](https://github.com/nickbruun/hayai), set the cmake variable `BUILD_BENCHMARKS=ON` then run the benchmark executable.
 
 ## How to use
 
@@ -48,7 +53,7 @@ int main(int, char**) {
 
     std::cout << "Splitting: " << std::endl << input << std::endl;
 
-    std::vector<LineSegmentPtr> result = intersectionsplitter::splitLineSegmentsAtIntersections(input);
+    std::vector<intersectionsplitter::LineSegmentPtr> result = intersectionsplitter::splitLineSegmentsAtIntersections(input);
 
     std::cout << "Result: " << std::endl << result;
 

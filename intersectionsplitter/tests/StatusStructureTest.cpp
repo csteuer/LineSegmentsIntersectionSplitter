@@ -9,7 +9,7 @@
 
 using namespace intersectionsplitter;
 
-#define Directed_Fragment(x0,y0, x1,y1) directSegment(Fragment(x0,y0, x1,y1))
+#define Directed_Segment(x0,y0, x1,y1) directSegment(Segment(x0,y0, x1,y1))
 
 void expect_inorder(const std::vector<LineSegmentPtr>& order, StatusStructure& ss) {
 
@@ -36,9 +36,9 @@ void expect_inorder(const std::vector<LineSegmentPtr>& order, StatusStructure& s
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, verticalFragments) {
 
 
-    LineSegmentPtr a = Directed_Fragment(0,1, 0,-1);
-    LineSegmentPtr b = Directed_Fragment(1,1, 1,-1);
-    LineSegmentPtr c = Directed_Fragment(2,1, 2,-1);
+    LineSegmentPtr a = Directed_Segment(0,1, 0,-1);
+    LineSegmentPtr b = Directed_Segment(1,1, 1,-1);
+    LineSegmentPtr c = Directed_Segment(2,1, 2,-1);
 
 
 
@@ -53,9 +53,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, verticalFragments) {
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, nonVerticalFragments) {
 
-    LineSegmentPtr a = Directed_Fragment(0,2, 4,-2);
-    LineSegmentPtr b = Directed_Fragment(6,2, 4,-1);
-    LineSegmentPtr c = Directed_Fragment(3,3, 18,-1);
+    LineSegmentPtr a = Directed_Segment(0,2, 4,-2);
+    LineSegmentPtr b = Directed_Segment(6,2, 4,-1);
+    LineSegmentPtr c = Directed_Segment(3,3, 18,-1);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -68,9 +68,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, nonVerticalFragments) 
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, horizontalFragment) {
 
-    LineSegmentPtr a = Directed_Fragment(3,2, 0,-2);
-    LineSegmentPtr b = Directed_Fragment(2,0, 6,0);
-    LineSegmentPtr c = Directed_Fragment(5,2, 10,-2);
+    LineSegmentPtr a = Directed_Segment(3,2, 0,-2);
+    LineSegmentPtr b = Directed_Segment(2,0, 6,0);
+    LineSegmentPtr c = Directed_Segment(5,2, 10,-2);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -85,9 +85,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, horizontalFragment) {
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStartOnScanLine) {
 
-    LineSegmentPtr a = Directed_Fragment(4,0, 3,-1);
-    LineSegmentPtr b = Directed_Fragment(4,0, 2,-4);
-    LineSegmentPtr c = Directed_Fragment(4,0, 5,-1);
+    LineSegmentPtr a = Directed_Segment(4,0, 3,-1);
+    LineSegmentPtr b = Directed_Segment(4,0, 2,-4);
+    LineSegmentPtr c = Directed_Segment(4,0, 5,-1);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -101,9 +101,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStart
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStartOnScanLine_insertTogether) {
 
     std::vector<LineSegmentPtr> input = {
-        Directed_Fragment(4,0, 3,-1),
-        Directed_Fragment(4,0, 2,-4),
-        Directed_Fragment(4,0, 5,-1)
+        Directed_Segment(4,0, 3,-1),
+        Directed_Segment(4,0, 2,-4),
+        Directed_Segment(4,0, 5,-1)
     };
 
     StatusStructure ss;
@@ -115,9 +115,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStart
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStartOnScanLineWithHorizontal) {
 
-    LineSegmentPtr a = Directed_Fragment(3,0, 0,-3);
-    LineSegmentPtr b = Directed_Fragment(3,0, 6,-1);
-    LineSegmentPtr c = Directed_Fragment(3,0, 5, 0);
+    LineSegmentPtr a = Directed_Segment(3,0, 0,-3);
+    LineSegmentPtr b = Directed_Segment(3,0, 6,-1);
+    LineSegmentPtr c = Directed_Segment(3,0, 5, 0);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -131,9 +131,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStart
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStartOnScanLineWithHorizontal_insertTogether) {
 
     std::vector<LineSegmentPtr> input = {
-        Directed_Fragment(3,0, 0,-3),
-        Directed_Fragment(3,0, 6,-1),
-        Directed_Fragment(3,0, 5, 0)
+        Directed_Segment(3,0, 0,-3),
+        Directed_Segment(3,0, 6,-1),
+        Directed_Segment(3,0, 5, 0)
     };
 
     StatusStructure ss;
@@ -145,13 +145,13 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, fragmentsWithSameStart
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testInsertFragmentsWithSameStartOnScanLineIntoNonEmptyStatus) {
 
-    LineSegmentPtr a = Directed_Fragment(0,2, 1,-1);
-    LineSegmentPtr b = Directed_Fragment(5,2, 3,-2);
+    LineSegmentPtr a = Directed_Segment(0,2, 1,-1);
+    LineSegmentPtr b = Directed_Segment(5,2, 3,-2);
 
     std::vector<LineSegmentPtr> input = {
-        Directed_Fragment(3,0, 0,-3),
-        Directed_Fragment(3,0, 6,-1),
-        Directed_Fragment(3,0, 5, 0)
+        Directed_Segment(3,0, 0,-3),
+        Directed_Segment(3,0, 6,-1),
+        Directed_Segment(3,0, 5, 0)
     };
 
     StatusStructure ss;
@@ -165,13 +165,13 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testInsertFragmentsWit
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testStartpointsAtAlternatingHeight) {
 
-    LineSegmentPtr a = Directed_Fragment(9,4, 7,-2);
-    LineSegmentPtr b = Directed_Fragment(7,3, 5,-3);
-    LineSegmentPtr c = Directed_Fragment(10,3, 9,-3);
-    LineSegmentPtr d = Directed_Fragment(5,2, 3,-4);
-    LineSegmentPtr e = Directed_Fragment(7,2, 6,-4);
-    LineSegmentPtr f = Directed_Fragment(9,2, 8,-4);
-    LineSegmentPtr g = Directed_Fragment(11,2, 11,-4);
+    LineSegmentPtr a = Directed_Segment(9,4, 7,-2);
+    LineSegmentPtr b = Directed_Segment(7,3, 5,-3);
+    LineSegmentPtr c = Directed_Segment(10,3, 9,-3);
+    LineSegmentPtr d = Directed_Segment(5,2, 3,-4);
+    LineSegmentPtr e = Directed_Segment(7,2, 6,-4);
+    LineSegmentPtr f = Directed_Segment(9,2, 8,-4);
+    LineSegmentPtr g = Directed_Segment(11,2, 11,-4);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -188,14 +188,14 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testStartpointsAtAlter
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testDelete) {
 
-    LineSegmentPtr a = Directed_Fragment(4.5,5, 4.5,-1);
-    LineSegmentPtr b = Directed_Fragment(4,4, 4,-2);
-    LineSegmentPtr c = Directed_Fragment(2,3, 2,-3);
-    LineSegmentPtr d = Directed_Fragment(6,3, 6,-3);
-    LineSegmentPtr e = Directed_Fragment(1,2, 1,-4);
-    LineSegmentPtr f = Directed_Fragment(3,2, 3,-3);
-    LineSegmentPtr g = Directed_Fragment(5,2, 5,-4);
-    LineSegmentPtr h = Directed_Fragment(7,2, 7,-4);
+    LineSegmentPtr a = Directed_Segment(4.5,5, 4.5,-1);
+    LineSegmentPtr b = Directed_Segment(4,4, 4,-2);
+    LineSegmentPtr c = Directed_Segment(2,3, 2,-3);
+    LineSegmentPtr d = Directed_Segment(6,3, 6,-3);
+    LineSegmentPtr e = Directed_Segment(1,2, 1,-4);
+    LineSegmentPtr f = Directed_Segment(3,2, 3,-3);
+    LineSegmentPtr g = Directed_Segment(5,2, 5,-4);
+    LineSegmentPtr h = Directed_Segment(7,2, 7,-4);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -243,11 +243,11 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testDelete) {
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentLeftOfPoint) {
 
-    LineSegmentPtr a = Directed_Fragment(7,4, 5,-3);
-    LineSegmentPtr b = Directed_Fragment(5,3, 3,-2);
-    LineSegmentPtr c = Directed_Fragment(8,3, 12, -3);
-    LineSegmentPtr d = Directed_Fragment(8,2, 9,-2);
-    LineSegmentPtr e = Directed_Fragment(7,1, 6, -3);
+    LineSegmentPtr a = Directed_Segment(7,4, 5,-3);
+    LineSegmentPtr b = Directed_Segment(5,3, 3,-2);
+    LineSegmentPtr c = Directed_Segment(8,3, 12, -3);
+    LineSegmentPtr d = Directed_Segment(8,2, 9,-2);
+    LineSegmentPtr e = Directed_Segment(7,1, 6, -3);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -270,9 +270,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentLeftOfPoin
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentLeftOfPointWithHorizontalAndSameStartpoint) {
 
-    LineSegmentPtr a = Directed_Fragment(2,1, 2,-2);
-    LineSegmentPtr b = Directed_Fragment(4,0, 3,-2);
-    LineSegmentPtr c = Directed_Fragment(4,0, 6, 0);
+    LineSegmentPtr a = Directed_Segment(2,1, 2,-2);
+    LineSegmentPtr b = Directed_Segment(4,0, 3,-2);
+    LineSegmentPtr c = Directed_Segment(4,0, 6, 0);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -294,11 +294,11 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testLeftOfPointEmpty) 
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentRightOfPoint) {
 
-    LineSegmentPtr a = Directed_Fragment(7,4, 5,-3);
-    LineSegmentPtr b = Directed_Fragment(5,3, 3,-2);
-    LineSegmentPtr c = Directed_Fragment(8,3, 12, -3);
-    LineSegmentPtr d = Directed_Fragment(8,2, 9,-2);
-    LineSegmentPtr e = Directed_Fragment(7,1, 6, -3);
+    LineSegmentPtr a = Directed_Segment(7,4, 5,-3);
+    LineSegmentPtr b = Directed_Segment(5,3, 3,-2);
+    LineSegmentPtr c = Directed_Segment(8,3, 12, -3);
+    LineSegmentPtr d = Directed_Segment(8,2, 9,-2);
+    LineSegmentPtr e = Directed_Segment(7,1, 6, -3);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -321,9 +321,9 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentRightOfPoi
 
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentRightOfPointWithHorizontalAndSameStartpoint) {
 
-    LineSegmentPtr a = Directed_Fragment(2,1, 2,-2);
-    LineSegmentPtr b = Directed_Fragment(4,0, 3,-2);
-    LineSegmentPtr c = Directed_Fragment(4,0, 6, 0);
+    LineSegmentPtr a = Directed_Segment(2,1, 2,-2);
+    LineSegmentPtr b = Directed_Segment(4,0, 3,-2);
+    LineSegmentPtr c = Directed_Segment(4,0, 6, 0);
 
     StatusStructure ss;
     ss.insert(a, Point(0, 0));
@@ -343,13 +343,13 @@ TEST(WallFragmentIntersectionSplitterStatusStructureTest, testFragmentRightOfPoi
 TEST(WallFragmentIntersectionSplitterStatusStructureTest, removeNonExistendElements) {
 
     StatusStructure ss;
-    ss.insert(Directed_Fragment(0,1, 0,-1), Point(0, 0));
+    ss.insert(Directed_Segment(0,1, 0,-1), Point(0, 0));
 
     // Remove fragment above the scan line
-    ss.remove(Directed_Fragment(0,3, 0,2));
+    ss.remove(Directed_Segment(0,3, 0,2));
 
     // Remove fragment below the scan line
-    ss.remove(Directed_Fragment(0,-2, 0,-4));
+    ss.remove(Directed_Segment(0,-2, 0,-4));
 
 }
 
