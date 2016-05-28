@@ -1,0 +1,40 @@
+dist: trusty
+language: cpp
+matrix:
+  include:
+    - compiler: gcc-debug
+      env:
+        - CXX_COMPILER=g++
+        - C_COMPILER=gcc
+        - BUILD_TYPE=DEBUG
+
+    - compiler: gcc-release
+      env:
+        - CXX_COMPILER=g++
+        - C_COMPILER=gcc
+
+    - compiler: clang-debug
+      env:
+        - CXX_COMPILER=clang++-
+        - C_COMPILER=clang
+        - BUILD_TYPE=DEBUG
+
+    - compiler: clang-release
+      env:
+        - CXX_COMPILER=clang
+        - C_COMPILER=clang
+        - BUILD_TYPE=RELEASE
+script:
+  - git clone https://github.com/nickbruun/hayai.git
+  - cd hayai
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - cd ../..
+  - git clone https://github.com/google/googletest.git
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$CXX_COMPILER -DCMAKE_C_COMPILER=$C_COMPILER -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=ON -DBUILD_APPS=ON -Dhayai_DIR=../../hayai/build ..
+  - make
+  - intersectionsplitter/tests/intersectionsplitter-tests
