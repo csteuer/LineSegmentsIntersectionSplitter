@@ -1,8 +1,8 @@
 #pragma once
 
 #include <gmock/gmock.h>
-#include <intersectionsplitter/LineSegment.h>
-#include <intersectionsplitter/PrintUtils.h>
+#include <intersectionsplitter/linesegment.h>
+#include <intersectionsplitter/printutils.h>
 
 #define StackSegment(x1, y1, x2, y2) \
     intersectionsplitter::LineSegment::init(static_cast<float>(x1), static_cast<float>(y1), static_cast<float>(x2), static_cast<float>(y2))

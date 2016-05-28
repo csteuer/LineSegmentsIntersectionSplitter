@@ -1,5 +1,5 @@
-#include <intersectionsplitter/StatusStructure.h>
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
+#include "statusstructure.h"
+#include "intersectionsplitterutils.h"
 
 #include <queue>
 #include <utility>

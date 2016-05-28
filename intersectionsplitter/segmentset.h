@@ -3,7 +3,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "LineSegment.h"
+#include "linesegment.h"
 
 namespace intersectionsplitter {
 

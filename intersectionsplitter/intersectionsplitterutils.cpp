@@ -1,4 +1,4 @@
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
+#include "intersectionsplitterutils.h"
 
 #include <cmath>
 #include <limits>

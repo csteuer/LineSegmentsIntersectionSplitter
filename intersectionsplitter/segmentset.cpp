@@ -1,4 +1,4 @@
-#include <intersectionsplitter/SegmentSet.h>
+#include "segmentset.h"
 
 #include <assert.h>
 

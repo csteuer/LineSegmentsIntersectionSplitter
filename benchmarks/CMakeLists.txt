@@ -6,7 +6,7 @@ set(SOURCES
 
 include_directories(
     ${HAYAI_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/intersectionsplitter/include
+    ${CMAKE_SOURCE_DIR}
 )
 
 add_executable(${target} ${SOURCES})

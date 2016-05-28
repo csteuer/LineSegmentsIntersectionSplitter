@@ -14,17 +14,6 @@ set(${PROJECTNAME}_VERSION_PATCH 0)
 set(${PROJECTNAME}_VERSION ${${PROJECTNAME}_VERSION_MAJOR}.${${PROJECTNAME}_VERSION_MINOR}.${${PROJECTNAME}_VERSION_PATCH})
 
 ##########################################################################################################
-# Options
-##########################################################################################################
-
-option(STATIC_INTERSECTIONSPLITTER "Build static floorplanextractor libraries." OFF)
-set(LIBRARY_TYPE SHARED)
-if(STATIC_INTERSECTIONSPLITTER)
-    set(LIBRARY_TYPE STATIC)
-    add_definitions(-DSTATIC_INTERSECTIONSPLITTER)
-endif()
-
-##########################################################################################################
 # Environment Setup
 ##########################################################################################################
 
@@ -81,6 +70,13 @@ IF(BUILD_BENCHMARKS)
 ENDIF()
 
 ##########################################################################################################
+# Other options
+##########################################################################################################
+
+# Default cmake variable that is overwritten by gmock/gtest
+option(BUILD_SHARED_LIBS "Build shared library (builds static library otherwise)." OFF)
+
+##########################################################################################################
 # Install definitions
 ##########################################################################################################
 
@@ -104,9 +100,7 @@ function(install_module target)
 
 
     foreach(file ${PUBLIC_HEADER})
-        file(RELATIVE_PATH subpath "${CMAKE_CURRENT_SOURCE_DIR}/include/intersectionsplitter" "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-        get_filename_component(subpath ${subpath} DIRECTORY)
-        install(FILES ${file} DESTINATION ${INSTALL_INCLUDE_DIR}/intersectionsplitter/${subpath})
+        install(FILES ${file} DESTINATION ${INSTALL_INCLUDE_DIR}/intersectionsplitter/)
         set(API_HEADER ${API_HEADER} ${CMAKE_CURRENT_SOURCE_DIR}/${file} CACHE INTERNAL "The header files of the public api.")
     endforeach()
 
@@ -171,6 +165,6 @@ if(DOXYGEN_FOUND)
         ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen_conf
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc
         COMMENT "Generating API documentation with Doxygen" VERBATIM
-        SOURCES doxygen_conf.in README.md
+        SOURCES doxygen_conf.in README.md .travis.yml
     )
 endif(DOXYGEN_FOUND)

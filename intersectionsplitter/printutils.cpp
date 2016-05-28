@@ -1,4 +1,4 @@
-#include <intersectionsplitter/PrintUtils.h>
+#include "printutils.h"
 
 namespace intersectionsplitter {
 

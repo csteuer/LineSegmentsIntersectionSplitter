@@ -2,7 +2,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
-#include <intersectionsplitter/LineSegment.h>
+#include <intersectionsplitter/linesegment.h>
 
 inline QPointF toQPoint(const intersectionsplitter::Point& p) {
     return QPointF(static_cast<qreal>(p.x()), static_cast<qreal>(p.y()));

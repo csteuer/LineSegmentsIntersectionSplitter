@@ -1,5 +1,5 @@
-#include <intersectionsplitter/LineSegment.h>
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
+#include "linesegment.h"
+#include "intersectionsplitterutils.h"
 #include <cmath>
 
 namespace intersectionsplitter {

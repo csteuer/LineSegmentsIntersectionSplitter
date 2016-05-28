@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LineSegment.h"
+#include "linesegment.h"
 
 namespace intersectionsplitter {
 

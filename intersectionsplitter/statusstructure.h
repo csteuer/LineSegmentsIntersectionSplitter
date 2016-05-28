@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstddef>
 
-#include "LineSegment.h"
+#include "linesegment.h"
 
 namespace intersectionsplitter {
 

@@ -1,4 +1,4 @@
-#include "GraphicsView.h"
+#include "graphicsview.h"
 
 #include <QWheelEvent>
 #include <QMouseEvent>

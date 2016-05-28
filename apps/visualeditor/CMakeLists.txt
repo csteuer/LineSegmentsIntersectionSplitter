@@ -9,30 +9,29 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 QT5_WRAP_UI(UI_HEADER
-    MainWindow.ui
+    mainwindow.ui
 )
 
 set(SOURCES
     ${UI_HEADER}
 
-    VisualEditor.cpp
-    MainWindow.h
-    MainWindow.cpp
-    InteractiveGraphicsScene.h
-    InteractiveGraphicsScene.cpp
-    GraphicsView.h
-    GraphicsView.cpp
-    GraphicalLineSegment.h
-    GraphicalLineSegment.cpp
-    Utils.hpp
+    visualeditor.cpp
+    mainwindow.h
+    mainwindow.cpp
+    interactivegraphicsscene.h
+    interactivegraphicsscene.cpp
+    graphicsview.h
+    graphicsview.cpp
+    graphicallinesegment.h
+    graphicallinesegment.cpp
+    utils.hpp
 )
 
 add_executable(${target} ${SOURCES})
 
 qt5_use_modules(${target} Core Gui Widgets)
-
 include_directories(
-    ${CMAKE_SOURCE_DIR}/intersectionsplitter/include
+    ${CMAKE_SOURCE_DIR}
 )
 
 set_target_properties(${target}

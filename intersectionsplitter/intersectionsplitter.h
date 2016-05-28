@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "intersectionsplitter_api.h"
-#include "LineSegment.h"
+#include "linesegment.h"
 
 /**
  * @brief contains the intersectionsplitter types and functions

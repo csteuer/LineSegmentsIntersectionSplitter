@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
 
-#include <intersectionsplitter/IntersectionSplitter.h>
+#include <intersectionsplitter/intersectionsplitter.h>
 
-#include "TestUtils.hpp"
+#include "testutils.hpp"
 
 #include <vector>
 

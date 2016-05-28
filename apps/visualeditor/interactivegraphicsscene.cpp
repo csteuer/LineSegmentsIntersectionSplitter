@@ -1,4 +1,4 @@
-﻿#include "InteractiveGraphicsScene.h"
+﻿#include "interactivegraphicsscene.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsEllipseItem>
@@ -6,8 +6,8 @@
 #include <QBrush>
 #include <QPen>
 
-#include "GraphicalLineSegment.h"
-#include "Utils.hpp"
+#include "graphicallinesegment.h"
+#include "utils.hpp"
 
 #include <cmath>
 #include <iostream>

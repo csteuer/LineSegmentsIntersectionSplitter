@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 
-#include "LineSegment.h"
+#include "linesegment.h"
 
 namespace intersectionsplitter {
 

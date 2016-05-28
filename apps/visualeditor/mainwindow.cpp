@@ -1,11 +1,11 @@
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QRect>
 
-#include "InteractiveGraphicsScene.h"
+#include "interactivegraphicsscene.h"
 
-#include <intersectionsplitter/IntersectionSplitter.h>
+#include <intersectionsplitter/intersectionsplitter.h>
 #include <iostream>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {

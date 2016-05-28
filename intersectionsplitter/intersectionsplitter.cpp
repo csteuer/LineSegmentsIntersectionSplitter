@@ -1,8 +1,8 @@
-#include <intersectionsplitter/IntersectionSplitter.h>
-#include <intersectionsplitter/StatusStructure.h>
-#include <intersectionsplitter/EventQueue.h>
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
-#include <intersectionsplitter/SegmentSet.h>
+#include "intersectionsplitter.h"
+#include "statusstructure.h"
+#include "eventqueue.h"
+#include "intersectionsplitterutils.h"
+#include "segmentset.h"
 
 #include <unordered_map>
 #include <unordered_set>

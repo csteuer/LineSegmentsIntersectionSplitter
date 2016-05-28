@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <intersectionsplitter/IntersectionSplitter.h>
+#include <intersectionsplitter/intersectionsplitter.h>
 
 #define SEGMENT(x1, y1, x2, y2) intersectionsplitter::LineSegment::create((float) x1, (float) y1, (float) x2, (float) y2)
 

@@ -1,5 +1,5 @@
-#include <intersectionsplitter/EventQueue.h>
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
+#include "eventqueue.h"
+#include "intersectionsplitterutils.h"
 
 namespace intersectionsplitter {
 

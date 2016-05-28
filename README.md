@@ -41,8 +41,8 @@ Install [hayai](https://github.com/nickbruun/hayai), set the cmake variable `BUI
 ## How to use
 
 ~~~~~~~~~~~~~{.cpp}
-#include <intersectionsplitter/IntersectionSplitter.h>
-#include <intersectionsplitter/PrintUtils.h>
+#include <intersectionsplitter/intersectionsplitter.h>
+#include <intersectionsplitter/printutils.h>
 
 int main(int, char**) {
 

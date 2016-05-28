@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>29</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -50,7 +50,7 @@
   <customwidget>
    <class>GraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>GraphicsView.h</header>
+   <header>graphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

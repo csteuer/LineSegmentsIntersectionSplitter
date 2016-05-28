@@ -5,42 +5,33 @@ set(target intersectionsplitter)
 ##########################################################################################################
 
 set(SOURCES
-    src/IntersectionSplitter.cpp
-    src/LineSegment.cpp
-    src/IntersectionSplitterUtils.cpp
-    src/StatusStructure.cpp
-    src/EventQueue.cpp
-    src/SegmentSet.cpp
-    src/PrintUtils.cpp
+    intersectionsplitter.cpp
+    linesegment.cpp
+    intersectionsplitterutils.cpp
+    statusstructure.cpp
+    eventqueue.cpp
+    segmentset.cpp
+    printutils.cpp
 )
 
 set(PUBLIC_HEADER
-    include/intersectionsplitter/intersectionsplitter_api.h
-    include/intersectionsplitter/IntersectionSplitter.h
-    include/intersectionsplitter/LineSegment.h
-    include/intersectionsplitter/PrintUtils.h
+    intersectionsplitter_api.h
+    intersectionsplitter.h
+    linesegment.h
+    printutils.h
 )
 
 set(HEADER
     ${PUBLIC_HEADER}
 
-    include/intersectionsplitter/IntersectionSplitterUtils.h
-    include/intersectionsplitter/StatusStructure.h
-    include/intersectionsplitter/EventQueue.h
-    include/intersectionsplitter/SegmentSet.h
+    intersectionsplitterutils.h
+    statusstructure.h
+    eventqueue.h
+    segmentset.h
 )
 
-add_library(${target} ${LIBRARY_TYPE} ${HEADER} ${SOURCES})
+add_library(${target} ${HEADER} ${SOURCES})
 
-
-include_directories(
-    ${PROJECT_BINARY_DIR}
-)
-
-include_directories(
-    BEFORE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
 
 set_target_properties(${target}
     PROPERTIES

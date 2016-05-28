@@ -1,4 +1,4 @@
-#include "GraphicalLineSegment.h"
+#include "graphicallinesegment.h"
 
 #include <QBrush>
 #include <QPen>
@@ -7,7 +7,7 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsScene>
 
-#include "Utils.hpp"
+#include "utils.hpp"
 
 #ifdef __clang__
 #pragma clang diagnostic push

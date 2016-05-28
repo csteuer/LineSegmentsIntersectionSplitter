@@ -1,9 +1,9 @@
 #include <gmock/gmock.h>
 
-#include <intersectionsplitter/StatusStructure.h>
-#include <intersectionsplitter/IntersectionSplitterUtils.h>
+#include <intersectionsplitter/statusstructure.h>
+#include <intersectionsplitter/intersectionsplitterutils.h>
 
-#include "TestUtils.hpp"
+#include "testutils.hpp"
 
 #include <vector>
 

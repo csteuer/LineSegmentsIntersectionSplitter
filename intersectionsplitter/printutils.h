@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "LineSegment.h"
+#include "linesegment.h"
 
 namespace intersectionsplitter {
 ::std::ostream& operator<<(::std::ostream& os, const Point& p);

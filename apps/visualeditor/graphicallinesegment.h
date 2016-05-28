@@ -1,6 +1,6 @@
 #pragma once
 
-#include <intersectionsplitter/LineSegment.h>
+#include <intersectionsplitter/linesegment.h>
 #include <memory>
 
 class QGraphicsItemGroup;

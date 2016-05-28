@@ -3,21 +3,22 @@ set(target intersectionsplitter-tests)
 include_directories(
     ${GTEST_INCLUDE_DIR}
     ${GMOCK_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}
 )
 
 set(sources
-    ../src/IntersectionSplitter.cpp
-    ../src/LineSegment.cpp
-    ../src/IntersectionSplitterUtils.cpp
-    ../src/StatusStructure.cpp
-    ../src/EventQueue.cpp
-    ../src/SegmentSet.cpp
-    ../src/PrintUtils.cpp
+    ../intersectionsplitter.cpp
+    ../linesegment.cpp
+    ../intersectionsplitterutils.cpp
+    ../statusstructure.cpp
+    ../eventqueue.cpp
+    ../segmentset.cpp
+    ../printutils.cpp
 
-    IntersectionSplitterTest.cpp
-    StatusStructureTest.cpp
-    IntersectionSplitterRegressionTest.cpp
-    TestUtils.hpp
+    intersectionsplittertest.cpp
+    statusstructuretest.cpp
+    intersectionsplitterregressiontest.cpp
+    testutils.hpp
 )
 
 source_group(tests REGULAR_EXPRESSION  ".*([.]h|[.]cpp|[.]hpp)")

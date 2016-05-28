@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include <QPointF>
 
-#include <intersectionsplitter/LineSegment.h>
+#include <intersectionsplitter/linesegment.h>
 
 class GraphicalLineSegment;
 
