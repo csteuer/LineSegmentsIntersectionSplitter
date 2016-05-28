@@ -20,9 +20,9 @@ public:
     float y() const;
     void setY(float y);
 
-    Point operator-(const Point& other) const;
-    Point operator+(const Point& other) const;
-    Point operator*(const float& value) const;
+    Point& operator-=(const Point& other);
+    Point& operator+=(const Point& other);
+    Point& operator*=(float value);
     Point normalized() const;
     float cross(const Point& other) const;
     float dot(const Point& other) const;
@@ -34,7 +34,10 @@ private:
     float m_y;
 };
 
-Point operator*(const float& scalar, const Point& point);
+Point operator+(Point lhs, const Point& rhs);
+Point operator-(Point lhs, const Point& rhs);
+Point operator*(float scalar, Point point);
+Point operator*(Point point, float scalar);
 Point operator-(const Point& point);
 
 class LineSegment;

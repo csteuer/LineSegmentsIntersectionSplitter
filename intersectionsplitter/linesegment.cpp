@@ -19,16 +19,22 @@ void Point::setY(float y) {
     m_y = y;
 }
 
-Point Point::operator-(const Point& other) const {
-    return Point(this->x() - other.x(), this->y() - other.y());
+Point& Point::operator-=(const Point& other) {
+    m_x -= other.x();
+    m_y -= other.y();
+    return *this;
 }
 
-Point Point::operator+(const Point& other) const {
-    return Point(this->x() + other.x(), this->y() + other.y());
+Point& Point::operator+=(const Point& other) {
+    m_x += other.x();
+    m_y += other.y();
+    return *this;
 }
 
-Point Point::operator*(const float& value) const {
-    return Point(this->x() * value, this->y() * value);
+Point& Point::operator*=(float value) {
+    m_x *= value;
+    m_y *= value;
+    return *this;
 }
 
 Point Point::normalized() const {
@@ -110,11 +116,23 @@ bool LineSegment::operator==(const LineSegment& other) const {
            (nearZero((m_end - other.start()).squaredLength()) && nearZero((m_start - other.end()).squaredLength()));
 }
 
-Point operator*(const float& scalar, const Point& point) {
-    return point * scalar;
+Point operator*(float scalar, Point point) {
+    return point *= scalar;
+}
+
+Point operator*(Point point, float scalar) {
+    return point *= scalar;
 }
 
 Point operator-(const Point& point) {
     return Point(-point.x(), -point.y());
+}
+
+Point operator+(Point lhs, const Point& rhs) {
+    return lhs += rhs;
+}
+
+Point operator-(Point lhs, const Point& rhs) {
+    return lhs -= rhs;
 }
 }
