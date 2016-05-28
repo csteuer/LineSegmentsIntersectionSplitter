@@ -1,6 +1,6 @@
 build/
 CMakeLists.txt.*
-gmock
+googletest/
 install/
 buildRelease/
 buildGCC/

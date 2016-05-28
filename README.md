@@ -25,10 +25,10 @@ Run `make doc` to generate the documentation (doxygen must be installed and and 
 
 ### Build and run the tests
 
-Checkout [gmock (>= 1.7)](https://code.google.com/p/googlemock/source/checkout) into `<project-root>/gmock` and set the cmake variable `BUILD_TESTS=ON`:
+Clone [googletest](https://github.com/google/googletest) into `<project-root>/googletest` and set the cmake variable `BUILD_TESTS=ON`:
 
-~~~~~~~~~~~~~{.txt}
-svn checkout http://googlemock.googlecode.com/svn/tags/release-1.7.0 gmock
+~~~~~~~~~~~~~{.sh}
+git clone https://github.com/google/googletest.git
 cd build
 cmake .. -DBUILD_TESTS=ON
 ./intersectionsplitter/tests/intersectionsplitter-tests

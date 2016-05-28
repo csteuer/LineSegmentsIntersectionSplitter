@@ -46,16 +46,17 @@ find_package(Doxygen)
 option(BUILD_TESTS "Builds the intersectionsplitter tests" OFF)
 
 IF(BUILD_TESTS)
-	SET(gtest_force_shared_crt TRUE) # For Visual C++: Force Gtest to link against shared runtime library (so that we can compile with /MD)
-	ADD_DEFINITIONS("-DGTEST_LANG_CXX11")
-	add_subdirectory(gmock)
-	enable_testing()
-	include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    set(gtest_force_shared_crt TRUE) # For Visual C++: Force Gtest to link against shared runtime library (so that we can compile with /MD)
+    add_definitions("-DGTEST_LANG_CXX11")
+    add_subdirectory(googletest)
+    enable_testing()
 
     if (UNIX)
         # disable/ignore compiler warnings for googletest
        set(DEFAULT_COMPILE_FLAGS  -isystem${gmock_SOURCE_DIR}/include -isystem${gtest_SOURCE_DIR}/include ${DEFAULT_COMPILE_FLAGS})
     endif()
+
+    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 ENDIF()
 
 ##########################################################################################################
