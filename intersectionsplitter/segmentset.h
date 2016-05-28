@@ -15,7 +15,7 @@ public:
 
     void insert(const std::vector<LineSegmentPtr>& segments);
 
-    std::vector<LineSegmentPtr> segments();
+    std::vector<LineSegmentPtr> segments() const;
 
     Container::const_iterator begin();
 

@@ -100,7 +100,7 @@ int intersection(const LineSegment& a, const LineSegment& b, Point& outIntersect
     return 1;
 }
 
-int intersection(const LineSegmentPtr a, const LineSegmentPtr b, Point& outIntersectionPoint, float& outDistanceFromAStart, float& outDistanceFromBStart,
+int intersection(const LineSegmentPtr& a, const LineSegmentPtr& b, Point& outIntersectionPoint, float& outDistanceFromAStart, float& outDistanceFromBStart,
                  float maxDistance) {
     return intersection(*a, *b, outIntersectionPoint, outDistanceFromAStart, outDistanceFromBStart, maxDistance);
 }
@@ -136,7 +136,7 @@ float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVe
     return t;
 }
 
-float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVector, const LineSegmentPtr segment) {
+float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVector, const LineSegmentPtr& segment) {
     return lineIntersection(lineSupportVector, lineNormedVector, *segment);
 }
 
@@ -146,7 +146,7 @@ float getPositionOnScanLine(const LineSegment& segment, const Point& eventPoint)
     return val;
 }
 
-float getPositionOnScanLine(const LineSegmentPtr segment, const Point& eventPoint) {
+float getPositionOnScanLine(const LineSegmentPtr& segment, const Point& eventPoint) {
     return getPositionOnScanLine(*segment, eventPoint);
 }
 
@@ -195,7 +195,7 @@ bool isALeftOfBOnScanLine(const LineSegment& segment_a, const LineSegment& segme
     return posA < posB;
 }
 
-bool isALeftOfBOnScanLine(const LineSegmentPtr segment_a, const LineSegmentPtr segment_b, const Point& eventPoint) {
+bool isALeftOfBOnScanLine(const LineSegmentPtr& segment_a, const LineSegmentPtr& segment_b, const Point& eventPoint) {
     return isALeftOfBOnScanLine(*segment_a, *segment_b, eventPoint);
 }
 }

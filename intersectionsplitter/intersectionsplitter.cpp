@@ -45,7 +45,7 @@ static LineSegmentPtr getRightmostFragmentIn(const std::vector<LineSegmentPtr>& 
 
 class IntersectionSplitter {
 public:
-    IntersectionSplitter(float extendedIntersectionDistance) {
+    explicit IntersectionSplitter(float extendedIntersectionDistance) {
         m_extendedIntersectionDistance = extendedIntersectionDistance;
     }
 
@@ -151,10 +151,6 @@ public:
         m_forwardExtendFragments.clear();
 
         return result.segments();
-    }
-
-    void setExtendedIntersectionDistance(float extendedIntersectionDistance) {
-        m_extendedIntersectionDistance = extendedIntersectionDistance;
     }
 
 protected:

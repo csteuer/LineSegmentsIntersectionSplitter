@@ -45,14 +45,6 @@ LineSegmentPtr StatusStructure::rightChild(size_t index) const {
     return getAt(getRightChildIndex(index));
 }
 
-LineSegmentPtr StatusStructure::parent(size_t index) const {
-    if (index == 0) {
-        return nullptr;
-    }
-
-    return getAt(getParentIndex(index));
-}
-
 void StatusStructure::insertAt(size_t index, LineSegmentPtr frag) {
     if (index >= m_tree.size()) {
         m_tree.resize(index + 1, nullptr);
@@ -88,7 +80,7 @@ void StatusStructure::move(size_t from, size_t to) {
     }
 }
 
-size_t StatusStructure::indexOf(const LineSegmentPtr frag, bool& outValid) const {
+size_t StatusStructure::indexOf(const LineSegmentPtr& frag, bool& outValid) const {
     auto it = m_index_map.find(frag);
     outValid = it != m_index_map.end();
     if (!outValid) {
@@ -125,7 +117,7 @@ void StatusStructure::insert(const std::vector<LineSegmentPtr>& fragmentsWithSam
     }
 }
 
-void StatusStructure::remove(const LineSegmentPtr fragment) {
+void StatusStructure::remove(const LineSegmentPtr& fragment) {
     bool valid;
     size_t index = indexOf(fragment, valid);
 
@@ -194,7 +186,7 @@ size_t StatusStructure::getLeftNeighbourIndex(size_t index) const {
     return currentIndex;
 }
 
-LineSegmentPtr StatusStructure::leftNeighbourOf(const LineSegmentPtr fragment) {
+LineSegmentPtr StatusStructure::leftNeighbourOf(const LineSegmentPtr& fragment) const {
     bool valid;
     size_t index = indexOf(fragment, valid);
 
@@ -249,7 +241,7 @@ size_t StatusStructure::getRightNeighbourIndex(size_t index) const {
     return currentIndex;
 }
 
-LineSegmentPtr StatusStructure::rightNeighbourOf(const LineSegmentPtr fragment) {
+LineSegmentPtr StatusStructure::rightNeighbourOf(const LineSegmentPtr& fragment) const {
     bool valid;
     size_t index = indexOf(fragment, valid);
 
@@ -299,7 +291,7 @@ size_t StatusStructure::getClosestTo(const Point& point, float& outDist) const {
     return closestIndex;
 }
 
-LineSegmentPtr StatusStructure::fragmentLeftOf(const Point& point) {
+LineSegmentPtr StatusStructure::fragmentLeftOf(const Point& point) const {
     float dist;
     size_t closestIndex = getClosestTo(point, dist);
     auto frag = getAt(closestIndex);
@@ -349,7 +341,7 @@ LineSegmentPtr StatusStructure::fragmentLeftOf(const Point& point) {
     return frag;
 }
 
-LineSegmentPtr StatusStructure::fragmentRightOf(const Point& point) {
+LineSegmentPtr StatusStructure::fragmentRightOf(const Point& point) const {
     float dist;
     size_t closestIndex = getClosestTo(point, dist);
     auto frag = getAt(closestIndex);

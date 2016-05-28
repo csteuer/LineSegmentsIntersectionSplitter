@@ -52,9 +52,7 @@ float Point::squaredLength() const {
     return this->x() * this->x() + this->y() * this->y();
 }
 
-LineSegment::LineSegment(const Point& start, const Point& end) {
-    m_start = start;
-    m_end = end;
+LineSegment::LineSegment(const Point& start, const Point& end) : m_start(start), m_end(end) {
 }
 
 LineSegmentPtr LineSegment::create(const Point& start, const Point& end) {

@@ -19,7 +19,7 @@ void SegmentSet::insert(const std::vector<LineSegmentPtr>& segments) {
     m_fragments.insert(segments.begin(), segments.end());
 }
 
-std::vector<LineSegmentPtr> SegmentSet::segments() {
+std::vector<LineSegmentPtr> SegmentSet::segments() const {
     return std::vector<LineSegmentPtr>(m_fragments.begin(), m_fragments.end());
 }
 

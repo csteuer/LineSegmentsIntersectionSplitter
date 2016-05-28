@@ -4,3 +4,5 @@ gmock
 install/
 buildRelease/
 buildGCC/
+cppcheck_report/
+cppcheck_result.xml

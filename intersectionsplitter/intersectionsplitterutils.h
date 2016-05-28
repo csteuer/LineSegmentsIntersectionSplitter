@@ -26,7 +26,7 @@ LineSegmentPtr directSegment(LineSegmentPtr frag);
  */
 int intersection(const LineSegment& a, const LineSegment& b, Point& outIntersectionPoint, float& outDistanceFromAStart, float& outDistanceFromBStart,
                  float maxDistance = 0.f);
-int intersection(const LineSegmentPtr a, const LineSegmentPtr b, Point& outIntersectionPoint, float& outDistanceFromAStart, float& outDistanceFromBStart,
+int intersection(const LineSegmentPtr& a, const LineSegmentPtr& b, Point& outIntersectionPoint, float& outDistanceFromAStart, float& outDistanceFromBStart,
                  float maxDistance = 0.f);
 
 /**
@@ -37,7 +37,7 @@ int intersection(const LineSegmentPtr a, const LineSegmentPtr b, Point& outInter
  * @return the signed eucildian distance from the lineSupportVector to the intersection point or nan (not a number) if there is no intersection
  */
 float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVector, const LineSegment& segment);
-float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVector, const LineSegmentPtr segment);
+float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVector, const LineSegmentPtr& segment);
 
 /**
  * @brief calculates the position of the fragment on the scan line
@@ -46,7 +46,7 @@ float lineIntersection(const Point& lineSupportVector, const Point& lineNormedVe
  * @return the position of the fragment on the scan line for the current event point
  */
 float getPositionOnScanLine(const LineSegment& segment, const Point& eventPoint);
-float getPositionOnScanLine(const LineSegmentPtr segment, const Point& eventPoint);
+float getPositionOnScanLine(const LineSegmentPtr& segment, const Point& eventPoint);
 
 /**
  * @brief determines wether a is left of b on the scan line
@@ -54,5 +54,5 @@ float getPositionOnScanLine(const LineSegmentPtr segment, const Point& eventPoin
  * @return  true if a is left of b, false otherwise
  */
 bool isALeftOfBOnScanLine(const LineSegment& segment_a, const LineSegment& segment_b, const Point& eventPoint);
-bool isALeftOfBOnScanLine(const LineSegmentPtr segment_a, const LineSegmentPtr segment_b, const Point& eventPoint);
+bool isALeftOfBOnScanLine(const LineSegmentPtr& segment_a, const LineSegmentPtr& segment_b, const Point& eventPoint);
 }
