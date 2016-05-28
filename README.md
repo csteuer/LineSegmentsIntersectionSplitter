@@ -1,5 +1,7 @@
 # LineSegmentsIntersectionSplitter
 
+[![Build Status](https://travis-ci.org/ClausSteuer/LineSegmentsIntersectionSplitter.svg?branch=master)](https://travis-ci.org/ClausSteuer/LineSegmentsIntersectionSplitter)
+
 Calculates the intersections of a set of line segments and splits the line segments at their intersections.
 Implements a modified version of the Bentley–Ottmann algorithm described in [de Berg, Mark, et al. Computational Geometry: Algorithms and Applications (2008)](http://link.springer.com/book/10.1007/978-3-540-77974-2).
 
