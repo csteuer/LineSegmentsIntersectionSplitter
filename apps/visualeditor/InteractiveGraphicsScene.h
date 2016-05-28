@@ -10,8 +10,7 @@
 
 class GraphicalLineSegment;
 
-class InteractiveGraphicsScene : public QGraphicsScene
-{
+class InteractiveGraphicsScene : public QGraphicsScene {
     Q_OBJECT
 public:
     InteractiveGraphicsScene();

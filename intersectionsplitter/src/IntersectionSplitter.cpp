@@ -23,22 +23,17 @@
 
 namespace intersectionsplitter {
 
-
-LineSegmentPtr getLeftmostFragmentIn(const std::vector<LineSegmentPtr>& fragments, const Point& eventPoint) {
-
+static LineSegmentPtr getLeftmostFragmentIn(const std::vector<LineSegmentPtr>& fragments, const Point& eventPoint) {
     LineSegmentPtr leftMostFragment = nullptr;
     for (auto& fragment : fragments) {
-
         if (leftMostFragment == nullptr || isALeftOfBOnScanLine(*fragment, *leftMostFragment, eventPoint)) {
             leftMostFragment = fragment;
         }
     }
     return leftMostFragment;
-
 }
 
-LineSegmentPtr getRightmostFragmentIn(const std::vector<LineSegmentPtr>& fragments, const Point& eventPoint) {
-
+static LineSegmentPtr getRightmostFragmentIn(const std::vector<LineSegmentPtr>& fragments, const Point& eventPoint) {
     LineSegmentPtr rightMostFragment = nullptr;
     for (auto& fragment : fragments) {
         if (rightMostFragment == nullptr || isALeftOfBOnScanLine(*rightMostFragment, *fragment, eventPoint)) {
@@ -46,9 +41,7 @@ LineSegmentPtr getRightmostFragmentIn(const std::vector<LineSegmentPtr>& fragmen
         }
     }
     return rightMostFragment;
-
 }
-
 
 class IntersectionSplitter {
 public:
@@ -56,16 +49,13 @@ public:
         m_extendedIntersectionDistance = extendedIntersectionDistance;
     }
 
-    std::vector<LineSegmentPtr> splitSegments(const std::vector<LineSegmentPtr>& fragments)
-    {
-
+    std::vector<LineSegmentPtr> splitSegments(const std::vector<LineSegmentPtr>& fragments) {
         bool extendFragments = m_extendedIntersectionDistance > 0.f && !nearZero(m_extendedIntersectionDistance);
 
         std::vector<LineSegmentPtr> backExtendFragments;
 
         // Insert fragments into the event queue
         for (LineSegmentPtr segment : fragments) {
-
             // Modify fragments f so that: f.start.y > f.end.y || (f.start.y == f.end.y && f.start.x < f.end.x)
             directSegment(segment);
 
@@ -76,7 +66,6 @@ public:
         // Add fragment extensions to the event queue
         if (extendFragments) {
             for (LineSegmentPtr segment : fragments) {
-
                 // Add extensions fragments at both endpoints (only if no such fragment already exists)
                 Point frag_vec = segment->vec().normalized();
 
@@ -101,14 +90,13 @@ public:
         SegmentSet result;
         result.insert(fragments);
 
-        while(!m_eventQueue.empty()) {
-
+        while (!m_eventQueue.empty()) {
             EventQueue::EventPoint current = m_eventQueue.pop();
 
             TRACE("Current: " << current.first.x() << ", " << current.first.y());
 
             // all intersections of the fragments that end at the current EventPoint are already found
-            for (const LineSegmentPtr fragment : current.second.fragmentsEndingHere) {
+            for (const LineSegmentPtr& fragment : current.second.fragmentsEndingHere) {
                 TRACE("Remove: " << fragment);
                 m_scope.remove(fragment);
             }
@@ -119,9 +107,11 @@ public:
 
             if (current.second.fragmentsStartingHere.empty()) {
                 LineSegmentPtr left = m_scope.fragmentLeftOf(current.first);
-                if (left == nullptr) continue;
-                LineSegmentPtr right = m_scope.rightNeighbourOf(left); //m_scope.fragmentRightOf(current.first);
-                if (right == nullptr) continue;
+                if (left == nullptr)
+                    continue;
+                LineSegmentPtr right = m_scope.rightNeighbourOf(left);  // m_scope.fragmentRightOf(current.first);
+                if (right == nullptr)
+                    continue;
                 assert(left != right);
                 intersectAndSplit(left, right, current, result);
             } else {
@@ -135,14 +125,12 @@ public:
                 assert(right_1 != right_2);
                 intersectAndSplit(right_1, right_2, current, result);
             }
-
         }
         // Intersections of a back extending fragment a with another fragment b at the start of a
         // are not recognized (b is removed when a is added). Hence a is not added to the result altough it
         // intersects another fragment... we have to dect those intersections manually
         EventQueue matcherQueue;
         for (LineSegmentPtr backExtSeg : backExtendFragments) {
-
             matcherQueue.getOrInsert(backExtSeg->start()).fragmentsStartingHere.push_back(backExtSeg);
         }
 
@@ -150,7 +138,7 @@ public:
             matcherQueue.getOrInsert(resultSeg->end()).fragmentsEndingHere.push_back(resultSeg);
         }
 
-        while(!matcherQueue.empty()) {
+        while (!matcherQueue.empty()) {
             EventQueue::EventPoint current = matcherQueue.pop();
             if (!current.second.fragmentsStartingHere.empty() && !current.second.fragmentsEndingHere.empty()) {
                 result.insert(current.second.fragmentsStartingHere);
@@ -165,18 +153,16 @@ public:
         return result.segments();
     }
 
-    void setExtendedIntersectionDistance(float extendedIntersectionDistance)
-    {
+    void setExtendedIntersectionDistance(float extendedIntersectionDistance) {
         m_extendedIntersectionDistance = extendedIntersectionDistance;
     }
 
 protected:
-
     int m_counter = 0;
 
     bool addNewFragmentToEventQueueExclusive(LineSegmentPtr fragment) {
         EventQueue::EventPointValue& start_ev = m_eventQueue.getOrInsert(fragment->start());
-        for (const LineSegmentPtr other : start_ev.fragmentsStartingHere) {
+        for (const LineSegmentPtr& other : start_ev.fragmentsStartingHere) {
             if (*other == *fragment) {
                 return false;
             }
@@ -194,7 +180,6 @@ protected:
     }
 
     void intersectAndSplit(LineSegmentPtr a, LineSegmentPtr b, const EventQueue::EventPoint& currentEvent, SegmentSet& fragments) {
-
         if (a == nullptr || b == nullptr) {
             return;
         }
@@ -203,8 +188,7 @@ protected:
         auto ext_it_b = m_extendFragments.find(b);
 
         if ((ext_it_a != m_extendFragments.end() && ext_it_b != m_extendFragments.end() && ext_it_a->second == ext_it_b->second) ||
-            (ext_it_a != m_extendFragments.end() && ext_it_a->second == b) ||
-            (ext_it_b != m_extendFragments.end() && ext_it_b->second == a)) {
+            (ext_it_a != m_extendFragments.end() && ext_it_a->second == b) || (ext_it_b != m_extendFragments.end() && ext_it_b->second == a)) {
             return;
         }
 
@@ -249,7 +233,8 @@ protected:
         return !zeroDist(distance);
     }
 
-    bool handleIntersectionOfFragment(LineSegmentPtr fragment, float dist, EventQueue::EventPointValue* intersectionEventPoint, const Point& intersectionPoint, bool isPast, SegmentSet& fragments, const EventQueue::EventPoint& currentEvent) {
+    bool handleIntersectionOfFragment(LineSegmentPtr fragment, float dist, EventQueue::EventPointValue* intersectionEventPoint, const Point& intersectionPoint,
+                                      bool isPast, SegmentSet& fragments, const EventQueue::EventPoint& currentEvent) {
         LineSegmentPtr split = nullptr;
 
         bool splitValid = validSplitDistance(dist) && validSplitDistance(dist - fragment->length());
@@ -297,14 +282,10 @@ protected:
 
     std::unordered_set<LineSegmentPtr> m_forwardExtendFragments;
     std::unordered_map<LineSegmentPtr, LineSegmentPtr> m_extendFragments;
-
 };
 
-std::vector<LineSegmentPtr> splitLineSegmentsAtIntersections(const std::vector<LineSegmentPtr>& segments, float extendedIntersectionDistance)
-{
+std::vector<LineSegmentPtr> splitLineSegmentsAtIntersections(const std::vector<LineSegmentPtr>& segments, float extendedIntersectionDistance) {
     IntersectionSplitter splitterInstance(extendedIntersectionDistance);
     return splitterInstance.splitSegments(segments);
 }
-
 }
-

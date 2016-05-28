@@ -3,3 +3,4 @@ CMakeLists.txt.*
 gmock
 install/
 buildRelease/
+buildGCC/

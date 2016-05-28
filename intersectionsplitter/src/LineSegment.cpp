@@ -4,160 +4,119 @@
 
 namespace intersectionsplitter {
 
-    Point::Point()
-    {
-        m_x = 0.f;
-        m_y = 0.f;
-    }
+float Point::x() const {
+    return m_x;
+}
 
-    Point::Point(float x, float y)
-    {
-        m_x = x;
-        m_y = y;
-    }
+void Point::setX(float x) {
+    m_x = x;
+}
+float Point::y() const {
+    return m_y;
+}
 
-    float Point::x() const
-    {
-        return m_x;
-    }
+void Point::setY(float y) {
+    m_y = y;
+}
 
-    void Point::setX(float x)
-    {
-        m_x = x;
-    }
-    float Point::y() const
-    {
-        return m_y;
-    }
+Point Point::operator-(const Point& other) const {
+    return Point(this->x() - other.x(), this->y() - other.y());
+}
 
-    void Point::setY(float y)
-    {
-        m_y = y;
-    }
+Point Point::operator+(const Point& other) const {
+    return Point(this->x() + other.x(), this->y() + other.y());
+}
 
-    Point Point::operator-(const Point& other) const
-    {
-        return Point(this->x() - other.x(), this->y() - other.y());
-    }
+Point Point::operator*(const float& value) const {
+    return Point(this->x() * value, this->y() * value);
+}
 
-    Point Point::operator+(const Point& other) const
-    {
-        return Point(this->x() + other.x(), this->y() + other.y());
-    }
+Point Point::normalized() const {
+    float len_inv = 1 / this->length();
+    return Point(this->x() * len_inv, this->y() * len_inv);
+}
 
-    Point Point::operator*(const float& value) const
-    {
-        return Point(this->x() * value, this->y() * value);
-    }
+float Point::cross(const Point& other) const {
+    return this->x() * other.y() - this->y() * other.x();
+}
 
-    Point Point::normalized() const
-    {
-        float len_inv = 1 / this->length();
-        return Point(this->x() * len_inv, this->y() * len_inv);
-    }
+float Point::dot(const Point& other) const {
+    return this->x() * other.x() + this->y() * other.y();
+}
 
-    float Point::cross(const Point& other) const
-    {
-        return this->x() * other.y() - this->y() * other.x();
-    }
+float Point::length() const {
+    return std::sqrt(this->squaredLength());
+}
 
-    float Point::dot(const Point& other) const
-    {
-        return this->x() * other.x() + this->y() * other.y();
-    }
+float Point::squaredLength() const {
+    return this->x() * this->x() + this->y() * this->y();
+}
 
-    float Point::length() const
-    {
-        return std::sqrt(this->squaredLength());
-    }
+LineSegment::LineSegment(const Point& start, const Point& end) {
+    m_start = start;
+    m_end = end;
+}
 
-    float Point::squaredLength() const
-    {
-        return this->x() * this->x() + this->y() * this->y();
-    }
+LineSegmentPtr LineSegment::create(const Point& start, const Point& end) {
+    return std::shared_ptr<LineSegment>(new LineSegment(start, end));
+}
 
-    LineSegment::LineSegment(const Point& start, const Point& end)
-    {
-        m_start = start;
-        m_end = end;
-    }
+LineSegmentPtr LineSegment::create(float x1, float y1, float x2, float y2) {
+    return create(Point(x1, y1), Point(x2, y2));
+}
 
-    LineSegmentPtr LineSegment::create(const Point& start, const Point& end)
-    {
-        return std::shared_ptr<LineSegment>(new LineSegment(start, end));
-    }
+LineSegment LineSegment::init(const Point& start, const Point& end) {
+    return LineSegment(start, end);
+}
 
-    LineSegmentPtr LineSegment::create(float x1, float y1, float x2, float y2)
-    {
-        return create(Point(x1, y1), Point(x2, y2));
-    }
+LineSegment LineSegment::init(float x1, float y1, float x2, float y2) {
+    return init(Point(x1, y1), Point(x2, y2));
+}
 
-    LineSegment LineSegment::init(const Point& start, const Point& end)
-    {
-        return LineSegment(start, end);
-    }
+const Point& LineSegment::start() const {
+    return m_start;
+}
 
-    LineSegment LineSegment::init(float x1, float y1, float x2, float y2)
-    {
-        return init(Point(x1, y1), Point(x2, y2));
-    }
+void LineSegment::setStart(const Point& start) {
+    m_start = start;
+}
 
-    const Point& LineSegment::start() const
-    {
-        return m_start;
-    }
+const Point& LineSegment::end() const {
+    return m_end;
+}
 
-    void LineSegment::setStart(const Point& start)
-    {
-        m_start = start;
-    }
+void LineSegment::setEnd(const Point& end) {
+    m_end = end;
+}
 
-    const Point& LineSegment::end() const
-    {
-        return m_end;
-    }
+void LineSegment::swapEndPoints() {
+    Point tmp = m_end;
+    m_end = m_start;
+    m_start = tmp;
+}
 
-    void LineSegment::setEnd(const Point& end)
-    {
-        m_end = end;
-    }
+Point LineSegment::vec() const {
+    return m_end - m_start;
+}
 
-    void LineSegment::swapEndPoints()
-    {
-        Point tmp = m_end;
-        m_end = m_start;
-        m_start = tmp;
-    }
+float LineSegment::length() const {
+    return vec().length();
+}
 
-    Point LineSegment::vec() const
-    {
-        return m_end - m_start;
-    }
+bool LineSegment::valid() const {
+    return std::isfinite(m_start.x()) && std::isfinite(m_start.y()) && std::isfinite(m_end.x()) && std::isfinite(m_end.y()) && !nearZero(this->length());
+}
 
-    float LineSegment::length() const
-    {
-        return vec().length();
-    }
+bool LineSegment::operator==(const LineSegment& other) const {
+    return (nearZero((m_start - other.start()).squaredLength()) && nearZero((m_end - other.end()).squaredLength())) ||
+           (nearZero((m_end - other.start()).squaredLength()) && nearZero((m_start - other.end()).squaredLength()));
+}
 
-    bool LineSegment::valid() const
-    {
-        return std::isfinite(m_start.x()) && std::isfinite(m_start.y()) && std::isfinite(m_end.x()) && std::isfinite(m_end.y()) && !nearZero(this->length());
-    }
+Point operator*(const float& scalar, const Point& point) {
+    return point * scalar;
+}
 
-    bool LineSegment::operator==(const LineSegment& other) const
-    {
-        return (nearZero((m_start - other.start()).squaredLength()) && nearZero((m_end - other.end()).squaredLength())) ||
-                (nearZero((m_end - other.start()).squaredLength()) && nearZero((m_start - other.end()).squaredLength()));
-    }
-
-    Point operator*(const float& scalar, const Point& point)
-    {
-        return point * scalar;
-    }
-
-    Point operator-(const Point& point)
-    {
-        return Point(-point.x(), -point.y());
-    }
-
+Point operator-(const Point& point) {
+    return Point(-point.x(), -point.y());
+}
 }

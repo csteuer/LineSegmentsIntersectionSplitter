@@ -7,21 +7,21 @@
 
 namespace intersectionsplitter {
 
-    class SegmentSet {
-        typedef std::unordered_set<LineSegmentPtr> Container;
-    public:
-        void insert(LineSegmentPtr segment);
+class SegmentSet {
+    typedef std::unordered_set<LineSegmentPtr> Container;
 
-        void insert(const std::vector<LineSegmentPtr>& segments);
+public:
+    void insert(LineSegmentPtr segment);
 
-        std::vector<LineSegmentPtr> segments();
+    void insert(const std::vector<LineSegmentPtr>& segments);
 
-        Container::const_iterator begin();
+    std::vector<LineSegmentPtr> segments();
 
-        Container::const_iterator end();
+    Container::const_iterator begin();
 
-    private:
-        Container m_fragments;
-    };
+    Container::const_iterator end();
 
+private:
+    Container m_fragments;
+};
 }

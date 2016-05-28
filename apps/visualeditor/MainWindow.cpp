@@ -8,10 +8,7 @@
 #include <intersectionsplitter/IntersectionSplitter.h>
 #include <iostream>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     scene = new InteractiveGraphicsScene();
@@ -21,15 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->exportBtn, SIGNAL(clicked()), this, SLOT(exportLineSegments()));
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
     delete scene;
 }
 
-
-void MainWindow::splitLines()
-{
+void MainWindow::splitLines() {
     std::vector<intersectionsplitter::LineSegmentPtr> input = scene->getLineSegments();
     std::vector<intersectionsplitter::LineSegmentPtr> output = intersectionsplitter::splitLineSegmentsAtIntersections(input);
 
@@ -40,14 +34,15 @@ void MainWindow::splitLines()
     }
 }
 
-void MainWindow::exportLineSegments()
-{
+void MainWindow::exportLineSegments() {
     std::vector<intersectionsplitter::LineSegmentPtr> segments = scene->getLineSegments();
 
     for (size_t i = 0; i < segments.size(); i++) {
         intersectionsplitter::LineSegmentPtr lineSegment = segments.at(i);
-        std::cout << "SEGMENT(" << lineSegment->start().x() << ", " << lineSegment->start().y() << ", " << lineSegment->end().x() << ", " << lineSegment->end().x() << ")";
-        if (i != segments.size() - 1) std::cout << ",";
+        std::cout << "SEGMENT(" << lineSegment->start().x() << ", " << lineSegment->start().y() << ", " << lineSegment->end().x() << ", "
+                  << lineSegment->end().x() << ")";
+        if (i != segments.size() - 1)
+            std::cout << ",";
         std::cout << std::endl;
     }
 }

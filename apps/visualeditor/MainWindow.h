@@ -4,27 +4,25 @@
 #include <QMainWindow>
 
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 class InteractiveGraphicsScene;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
     InteractiveGraphicsScene* scene;
 
 private slots:
     void splitLines();
     void exportLineSegments();
-
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

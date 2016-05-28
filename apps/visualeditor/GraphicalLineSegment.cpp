@@ -9,14 +9,21 @@
 
 #include "Utils.hpp"
 
-const float pointRadius = 5.f;
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#endif
+
+const double pointRadius = 5.0;
 const QBrush pointBrush(Qt::blue, Qt::SolidPattern);
 const QPen pointPen(QBrush(Qt::black, Qt::SolidPattern), 1);
 const QPen linePen(QBrush(Qt::black, Qt::SolidPattern), 2);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
-
-GraphicalLineSegment::GraphicalLineSegment(intersectionsplitter::LineSegmentPtr lineSegment, QGraphicsItemGroup* graphicsContainer)
-{
+GraphicalLineSegment::GraphicalLineSegment(intersectionsplitter::LineSegmentPtr lineSegment, QGraphicsItemGroup* graphicsContainer) {
     m_startPointGraphicsItem = nullptr;
     m_endPointGraphicsItem = nullptr;
     m_lineGraphicsItem = nullptr;
@@ -26,56 +33,49 @@ GraphicalLineSegment::GraphicalLineSegment(intersectionsplitter::LineSegmentPtr 
     updateGraphicalRepresentation();
 }
 
-GraphicalLineSegment::GraphicalLineSegment(const QPointF& start, const QPointF& end, QGraphicsItemGroup* graphicsContainer)
-{
+GraphicalLineSegment::GraphicalLineSegment(const QPointF& start, const QPointF& end, QGraphicsItemGroup* graphicsContainer) {
     m_startPointGraphicsItem = nullptr;
     m_endPointGraphicsItem = nullptr;
     m_lineGraphicsItem = nullptr;
 
-    m_lineSegment = intersectionsplitter::LineSegment::create((float) start.x(), (float) start.y(), (float) end.x(), (float) end.y());
+    m_lineSegment = intersectionsplitter::LineSegment::create(static_cast<float>(start.x()), static_cast<float>(start.y()), static_cast<float>(end.x()),
+                                                              static_cast<float>(end.y()));
     m_graphicsContainer = graphicsContainer;
     updateGraphicalRepresentation();
 }
 
-intersectionsplitter::LineSegmentPtr GraphicalLineSegment::getLineSegment()
-{
+intersectionsplitter::LineSegmentPtr GraphicalLineSegment::getLineSegment() {
     return m_lineSegment;
 }
 
-const intersectionsplitter::LineSegmentPtr GraphicalLineSegment::getLineSegment() const
-{
+const intersectionsplitter::LineSegmentPtr GraphicalLineSegment::getLineSegment() const {
     return m_lineSegment;
 }
 
-const QGraphicsEllipseItem* GraphicalLineSegment::getEndItem() const
-{
+const QGraphicsEllipseItem* GraphicalLineSegment::getEndItem() const {
     return m_startPointGraphicsItem;
 }
 
-const QGraphicsEllipseItem* GraphicalLineSegment::getStartItem() const
-{
+const QGraphicsEllipseItem* GraphicalLineSegment::getStartItem() const {
     return m_endPointGraphicsItem;
 }
 
-GraphicalLineSegment::~GraphicalLineSegment()
-{
-
+GraphicalLineSegment::~GraphicalLineSegment() {
 }
 
-QGraphicsEllipseItem* createPointItem() {
-    QGraphicsEllipseItem* item = new QGraphicsEllipseItem(-pointRadius, -pointRadius, 2.f * pointRadius, 2.f * pointRadius);
+static QGraphicsEllipseItem* createPointItem() {
+    QGraphicsEllipseItem* item = new QGraphicsEllipseItem(-pointRadius, -pointRadius, 2.0 * pointRadius, 2.0 * pointRadius);
     item->setBrush(pointBrush);
     item->setPen(pointPen);
     item->setZValue(1);
     return item;
 }
 
-bool hasPointAt(const QGraphicsItemGroup* group, const intersectionsplitter::Point& position) {
+static bool hasPointAt(const QGraphicsItemGroup* group, const intersectionsplitter::Point& position) {
     return getEllipseItemAt(group->scene(), group->mapToScene(toQPoint(position))) != nullptr;
 }
 
-void GraphicalLineSegment::updateGraphicalRepresentation()
-{
+void GraphicalLineSegment::updateGraphicalRepresentation() {
     // Update positions first as this might change the outcome of the hasPointAt method (e.g. consider if the points of a line segment are swapped)
     updatePositions();
 
@@ -99,18 +99,20 @@ void GraphicalLineSegment::updateGraphicalRepresentation()
     updatePositions();
 }
 
-void GraphicalLineSegment::updatePositions()
-{
+void GraphicalLineSegment::updatePositions() {
+    const double lineStartX = static_cast<double>(m_lineSegment->start().x());
+    const double lineStartY = static_cast<double>(m_lineSegment->start().y());
+
     if (m_lineGraphicsItem) {
-        m_lineGraphicsItem->setLine(QLineF(0, 0, m_lineSegment->vec().x(), m_lineSegment->vec().y()));
-        m_lineGraphicsItem->setPos(m_lineSegment->start().x(), m_lineSegment->start().y());
+        m_lineGraphicsItem->setLine(QLineF(0, 0, static_cast<double>(m_lineSegment->vec().x()), static_cast<double>(m_lineSegment->vec().y())));
+        m_lineGraphicsItem->setPos(lineStartX, lineStartY);
     }
 
     if (m_startPointGraphicsItem) {
-        m_startPointGraphicsItem->setPos(m_lineSegment->start().x(), m_lineSegment->start().y());
+        m_startPointGraphicsItem->setPos(lineStartX, lineStartY);
     }
 
     if (m_endPointGraphicsItem) {
-        m_endPointGraphicsItem->setPos(m_lineSegment->end().x(), m_lineSegment->end().y());
+        m_endPointGraphicsItem->setPos(static_cast<double>(m_lineSegment->end().x()), static_cast<double>(m_lineSegment->end().y()));
     }
 }

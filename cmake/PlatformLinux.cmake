@@ -30,44 +30,48 @@ set(DEFAULT_COMPILE_DEFS_RELEASE
 
 set(LINUX_COMPILE_FLAGS
     -fvisibility=hidden
-    -pthread -pipe
-    -fPIC -Wreturn-type
-    -Wall -pedantic
-    -Wextra
-    -Wfloat-equal
-    -Wcast-qual
-    -Wcast-align
+    -pthread
+    -pipe
+    -fPIC
+    -fno-rtti
     -Wconversion
+    -Wall
+    -Wextra
+    -pedantic
     -Werror
-    #-Wno-error=float-equal
-    -Wno-error=switch
 )
-# pthread       -> use pthread library
-# no-rtti       -> disable c++ rtti
-# no-exceptions -> disable exception handling
-# pipe          -> use pipes
-# fPIC          -> use position independent code
-# -Wreturn-type -Werror=return-type -> missing returns in functions and methods are handled as errors which stops the compilation
-# -Wshadow -> e.g. when a parameter is named like a member, too many warnings, disabled for now
-# -fvisibility=hidden -> only export symbols with __attribute__ ((visibility ("default")))
+
+set(LINUX_TEST_COMPILE_FLAGS
+    -fvisibility=hidden
+    -pthread
+    -pipe
+    -fPIC
+    -fno-rtti
+    -Werror
+    -Wall
+    -Wextra
+    -pedantic
+    -Wno-sign-compare
+)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # gcc
         set(LINUX_COMPILE_FLAGS
             ${LINUX_COMPILE_FLAGS}
             -Wtrampolines
-            #-Wno-error=unused-variable
+            -Wfloat-equal
+            -Wcast-qual
+            -Wcast-align
         )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # clang
     set(LINUX_COMPILE_FLAGS
         ${LINUX_COMPILE_FLAGS}
-        #-Wno-mismatched-tags
-        #-Wno-unsequenced
+        -Weverything
         -Wno-sign-conversion
-        -Wno-comment
-        #-Wno-unused-function
-        #-Wno-missing-braces
+        -Wno-c++98-compat
+        -Wno-c++98-compat-pedantic
+        -Wno-padded
 )
 endif()
 
@@ -75,9 +79,11 @@ set(LINUX_LINKER_FLAGS "-pthread")
 
 set(DEFAULT_COMPILE_FLAGS ${LINUX_COMPILE_FLAGS})
 
+set(DEFAULT_LINKER_FLAGS_RELWITHDEBINFO ${LINUX_LINKER_FLAGS})
 set(DEFAULT_LINKER_FLAGS_RELEASE ${LINUX_LINKER_FLAGS})
 set(DEFAULT_LINKER_FLAGS_DEBUG ${LINUX_LINKER_FLAGS})
 set(DEFAULT_LINKER_FLAGS ${LINUX_LINKER_FLAGS})
+
 
 # Add platform specific libraries for linking
 set(EXTRA_LIBS "")

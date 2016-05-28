@@ -13,20 +13,16 @@
 #include <iostream>
 #include <algorithm>
 
-InteractiveGraphicsScene::InteractiveGraphicsScene() : QGraphicsScene(QRect(0, 0, 200, 200))
-{
+InteractiveGraphicsScene::InteractiveGraphicsScene() : QGraphicsScene(QRect(0, 0, 200, 200)) {
     m_sceneRoot = new QGraphicsItemGroup();
     this->addItem(m_sceneRoot);
     m_currentLineInCreation = nullptr;
 }
 
 InteractiveGraphicsScene::~InteractiveGraphicsScene() {
-
-
 }
 
-void InteractiveGraphicsScene::addLineSegment(intersectionsplitter::LineSegmentPtr lineSegment)
-{
+void InteractiveGraphicsScene::addLineSegment(intersectionsplitter::LineSegmentPtr lineSegment) {
     if (m_lineSegmentsSet.count(lineSegment.get()) > 0) {
         return;
     }
@@ -35,27 +31,22 @@ void InteractiveGraphicsScene::addLineSegment(intersectionsplitter::LineSegmentP
     m_lineSegmentsSet.insert(lineSegment.get());
 }
 
-std::vector<intersectionsplitter::LineSegmentPtr> InteractiveGraphicsScene::getLineSegments()
-{
+std::vector<intersectionsplitter::LineSegmentPtr> InteractiveGraphicsScene::getLineSegments() {
     std::vector<intersectionsplitter::LineSegmentPtr> out;
     for (std::unique_ptr<GraphicalLineSegment>& gfxSegment : m_graphicalLineSegments) {
-       out.push_back(gfxSegment->getLineSegment());
+        out.push_back(gfxSegment->getLineSegment());
     }
 
     return out;
 }
 
-void InteractiveGraphicsScene::updateLineSegmentsGraphicalRepresentation()
-{
+void InteractiveGraphicsScene::updateLineSegmentsGraphicalRepresentation() {
     for (const auto& lineSegmentGfx : m_graphicalLineSegments) {
         lineSegmentGfx->updateGraphicalRepresentation();
     }
 }
 
-
-void InteractiveGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-
+void InteractiveGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     if (event->button() == Qt::MouseButton::LeftButton) {
         event->accept();
         m_lastPressPos = event->screenPos();
@@ -64,8 +55,7 @@ void InteractiveGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void InteractiveGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
+void InteractiveGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     if (event->button() == Qt::MouseButton::LeftButton && (event->screenPos() - m_lastPressPos).manhattanLength() < 10) {
         event->accept();
 
@@ -74,23 +64,17 @@ void InteractiveGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event
     m_dragMode = false;
 }
 
-void InteractiveGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
+void InteractiveGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_dragMode) {
         QPointF delta = event->scenePos() - m_lastDragPos;
         m_lastDragPos = event->scenePos();
         handleDrag(delta);
     } else if (m_currentLineInCreation != nullptr) {
         QPointF pos = tryGetPositionOfExistingPoint(event->scenePos(), m_sceneRoot->mapFromScene(event->scenePos()), m_currentLineInCreation->getEndItem());
-        m_currentLineInCreation->getLineSegment()->setEnd(intersectionsplitter::Point((float) pos.x(), (float) pos.y()));
+        m_currentLineInCreation->getLineSegment()->setEnd(intersectionsplitter::Point(static_cast<float>(pos.x()), static_cast<float>(pos.y())));
         m_currentLineInCreation->updateGraphicalRepresentation();
     }
 }
-
-const float pointRadius = 5.f;
-const QBrush pointBrush(Qt::red, Qt::SolidPattern);
-const QPen pointPen(QBrush(Qt::black, Qt::SolidPattern), 1);
-const QPen linePen(QBrush(Qt::black, Qt::SolidPattern), 2);
 
 QPointF InteractiveGraphicsScene::tryGetPositionOfExistingPoint(const QPointF& atScenePos, const QPointF& defaultPos, const QGraphicsEllipseItem* except) {
     QGraphicsEllipseItem* p = getEllipseItemAt(this, atScenePos, except);
@@ -103,7 +87,6 @@ QPointF InteractiveGraphicsScene::tryGetPositionOfExistingPoint(const QPointF& a
 }
 
 void InteractiveGraphicsScene::handleMouseClick(QGraphicsSceneMouseEvent* event) {
-
     QPointF pos = tryGetPositionOfExistingPoint(event->scenePos(), m_sceneRoot->mapFromScene(event->scenePos()));
 
     if (m_currentLineInCreation != nullptr) {
@@ -114,15 +97,8 @@ void InteractiveGraphicsScene::handleMouseClick(QGraphicsSceneMouseEvent* event)
     } else {
         m_currentLineInCreation = std::unique_ptr<GraphicalLineSegment>(new GraphicalLineSegment(pos, pos, m_sceneRoot));
     }
-
 }
 
-void InteractiveGraphicsScene::handleDrag(const QPointF& delta)
-{
+void InteractiveGraphicsScene::handleDrag(const QPointF& delta) {
     m_sceneRoot->setTransform(m_sceneRoot->transform().translate(delta.x(), delta.y()));
 }
-
-
-
-
-

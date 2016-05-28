@@ -62,6 +62,11 @@ IF(BUILD_TESTS)
 	add_subdirectory(gmock)
 	enable_testing()
 	include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+    if (UNIX)
+        # disable/ignore compiler warnings for googletest
+       set(DEFAULT_COMPILE_FLAGS  -isystem${gmock_SOURCE_DIR}/include -isystem${gtest_SOURCE_DIR}/include ${DEFAULT_COMPILE_FLAGS})
+    endif()
 ENDIF()
 
 ##########################################################################################################
